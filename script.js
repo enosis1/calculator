@@ -29,3 +29,18 @@ function operate(operator, x, y) {
 		return divide(x, y);
 	}
 };
+
+let currentNumber = "";
+const numberButtons = document.querySelectorAll('.number');
+const display = document.querySelector('.display');
+
+numberButtons.forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		handleNumber(e.target.textContent);
+	});
+});
+
+function handleNumber(number) {
+	currentNumber += number;
+	display.textContent = currentNumber;
+}
