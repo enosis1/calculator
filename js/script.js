@@ -11,15 +11,12 @@ operands.forEach((operand) => {
   operand.addEventListener("click", displayNumber);
 });
 
-let operand1 = 0;
-let operand2 = 0;
+let numberOne;
+let numberTwo;
 
-operators.forEach((operator) => {
-  operator.addEventListener("click", () => {
-    let operatorSelected = operator.textContent;
-  });
-});
-
+function handleNumbers() {
+  
+}
 
 function operate(operator, operand1, operand2) {
   if (operator === "+") {

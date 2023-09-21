@@ -17,6 +17,7 @@ body {
 
 .calc-display {
   background-color: #f0f9ff;
+  height: 100px;
   display: flex;
   justify-content: flex-end;
   margin: 5px 2px;
