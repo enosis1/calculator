@@ -29,6 +29,10 @@ body {
   margin-right: 10px;
 }
 
+.previous-output {
+  font-size: small;
+}
+
 .buttons {
   display: flex;
   margin-bottom: 3px;

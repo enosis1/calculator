@@ -11,12 +11,25 @@ operands.forEach((operand) => {
   operand.addEventListener("click", displayNumber);
 });
 
-let numberOne;
-let numberTwo;
+let numberOne = "";
+let numberTwo = "";
 
-function handleNumbers() {
-  
-}
+operators.forEach((operator) => {
+  operator.addEventListener("click", () => {
+    if (numberOne === "") {
+      numberOne = +text.textContent;
+      text.textContent = "";
+    } else if (numberTwo === "") {
+      numberTwo = +text.textContent
+      text.textContent = ""
+    }
+    if (numberOne && numberTwo) {
+    text.textContent = operate(operator.textContent, +numberOne, +numberTwo)
+    }
+  });
+});
+
+function handleNumbers() {}
 
 function operate(operator, operand1, operand2) {
   if (operator === "+") {
@@ -42,6 +55,8 @@ function displayNumber(e) {
 
 function clearNumber() {
   text.textContent = "";
+  numberOne = "";
+  numberTwo = "";
 }
 
 function add(...nums) {
