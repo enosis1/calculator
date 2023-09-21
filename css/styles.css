@@ -10,9 +10,8 @@ body {
 .calculator-container {
   display: flex;
   flex-flow: column;
-  background-color: #083344;
-  border: 2px solid black;
-  border-bottom: 1px solid black;
+  background-color: #831843;
+  border: 10px solid #831843;
   border-radius: 10px;
 }
 
@@ -42,17 +41,17 @@ body {
 }
 
 .button {
-  border: 2px solid #a5f3fc;
+  border: 1px solid #f472b6;
   border-radius: 10px;
-  background-color: #cffafe;
+  background-color: #fbcfe8;
   color: black;
   font-size: xx-large;
 }
 
 .button.operator {
-  border: 2px solid #06b6d4;
+  border: 1px solid #ec4899;
   border-radius: 10px;
-  background-color: #22d3ee;
+  background-color: #e879f9;
   color: white;
   font-size: xx-large;
 }
@@ -66,7 +65,7 @@ body {
 }
 
 .clear {
-    flex: 3;
+  flex: 3;
 }
 
 button:hover {
