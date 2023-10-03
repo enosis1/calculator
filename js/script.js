@@ -17,19 +17,7 @@ let numberTwo = null;
 
 operators.forEach((operator) => {
   operator.addEventListener("click", () => {
-    if (Number.isInteger(numberOne) && Number.isInteger(numberTwo)) {
-      result = operate(operator.textContent, numberOne, numberTwo);
-      text.textContent = result;
-      numberOne = numberTwo;
-      numberTwo = null;
-    } else if (numberOne === null) {
-      numberOne = +text.textContent;
-      text.textContent = null;
-    } else if (numberTwo === null && numberOne !== null) {
-      text.textContent = null;
-      numberTwo = +text.textContent;
-      text.textContent = operate(operator.textContent, numberOne, numberTwo);
-    }
+    console.log("test");
   });
 });
 
