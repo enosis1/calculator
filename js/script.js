@@ -14,24 +14,37 @@ operands.forEach((operand) => {
 
 let numberOne = null;
 let numberTwo = null;
+let result;
+let operand;
 
 operators.forEach((operator) => {
-  operator.addEventListener("click", () => {
-    console.log("test");
-  });
+  operator.addEventListener("click", handleNumber);
 });
+
+function handleNumber(e) {
+  if (numberOne === null || operand === "") {
+    numberOne = +text.textContent;
+    operand = e.target.textContent;
+    text.textContent = "";
+  } else if (numberTwo === null && numberOne !== null) {
+    numberTwo = +text.textContent;
+    result = operate(operand, numberOne, numberTwo);
+    text.textContent = result;
+    numberOne = +result;
+    numberTwo = null;
+    operand = "";
+  }
+}
 
 function operate(operator, operand1, operand2) {
   if (operator === "+") {
     return add(operand1, operand2);
   } else if (operator === "-") {
     return subtract(operand1, operand2);
-  } else if (operator === "*") {
+  } else if (operator === "x") {
     return multiply(operand1, operand2);
   } else if (operator === "/") {
     return divide(operand1, operand2);
-  } else if (operator === "=") {
-    return;
   }
 }
 
@@ -45,18 +58,19 @@ function clearNumber() {
   text.textContent = "";
   numberOne = null;
   numberTwo = null;
+  operand = "";
 }
 
-function add(...nums) {
-  return nums.reduce((sum, num) => sum + num, 0);
+function add(a, b) {
+  return a + b;
 }
 
 function subtract(a, b) {
   return a - b;
 }
 
-function multiply(...nums) {
-  return nums.reduce((sum, num) => sum * num);
+function multiply(a, b) {
+  return a * b;
 }
 
 function divide(a, b) {
