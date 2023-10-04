@@ -25,7 +25,6 @@ function handleNumber(e) {
   if (numberOne === null || operand === "") {
     numberOne = +text.textContent;
     operand = e.target.textContent;
-    text.textContent = "";
   } else if (numberTwo === null && numberOne !== null) {
     numberTwo = +text.textContent;
     result = operate(operand, numberOne, numberTwo);
@@ -49,8 +48,15 @@ function operate(operator, operand1, operand2) {
 }
 
 function displayNumber(e) {
-  if (text.textContent.length >= 11) return;
+  let numberOneString;
+  if (text.textContent.length >= 15) return;
   if (e.target.textContent === "." && text.textContent.includes(".")) return;
+  if (numberOne !== null) {
+    numberOneString = numberOne.toString();
+  }
+  if (text.textContent === numberOneString) {
+    text.textContent = "";
+  }
   text.textContent += e.target.textContent;
 }
 
