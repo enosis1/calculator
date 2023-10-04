@@ -51,6 +51,9 @@ function operate(operator, operand1, operand2) {
   } else if (operator === "x") {
     return multiply(operand1, operand2);
   } else if (operator === "/") {
+    if (operand1 === 0 || operand2 === 0) {
+      return "lmao";
+    }
     return divide(operand1, operand2);
   }
 }
@@ -62,7 +65,7 @@ function displayNumber(e) {
   if (numberOne !== null) {
     numberOneString = numberOne.toString();
   }
-  if (text.textContent === numberOneString || result === +text.textContent) {
+  if (text.textContent === numberOneString || result === +text.textContent || result === "lmao") {
     text.textContent = "";
   }
   text.textContent += e.target.textContent;
