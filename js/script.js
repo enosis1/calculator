@@ -15,23 +15,31 @@ operands.forEach((operand) => {
 let numberOne = null;
 let numberTwo = null;
 let result;
-let operand;
+let operand = "";
 
 operators.forEach((operator) => {
   operator.addEventListener("click", handleNumber);
 });
 
 function handleNumber(e) {
-  if (numberOne === null || operand === "") {
+  if (numberOne === null && operand === "") {
     numberOne = +text.textContent;
     operand = e.target.textContent;
   } else if (numberTwo === null && numberOne !== null) {
     numberTwo = +text.textContent;
     result = operate(operand, numberOne, numberTwo);
+    if (operand === "") {
+      operand = e.target.textContent;
+    }
     text.textContent = result;
     numberOne = +result;
     numberTwo = null;
-    operand = "";
+    operand = e.target.textContent;
+    if (e.target.textContent === "=") {
+      numberOne = null;
+      numberTwo = null;
+      operand = "";
+    }
   }
 }
 
@@ -54,7 +62,7 @@ function displayNumber(e) {
   if (numberOne !== null) {
     numberOneString = numberOne.toString();
   }
-  if (text.textContent === numberOneString) {
+  if (text.textContent === numberOneString || result === +text.textContent) {
     text.textContent = "";
   }
   text.textContent += e.target.textContent;
