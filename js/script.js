@@ -30,8 +30,10 @@ function evaluate() {
   let newValue;
   if (numberOne !== null && operator !== null) {
     newValue = operate(numberOne, operator, Number(display.value));
-    display.value = newValue;
-    numberOne = newValue;
+    console.log(typeof newValue);
+    roundedValue = Math.round(newValue * 100000000) / 100000000;
+    display.value = roundedValue;
+    numberOne = roundedValue;
     numberTwo = null;
   }
 }
@@ -40,6 +42,9 @@ function addNumberToDisplay(e) {
   const button = e.target;
 
   if (button.textContent === "." && display.value.includes(".")) {
+    return;
+  }
+  if (display.value.length >= 9) {
     return;
   }
   if (numberOne === Number(display.value)) {
@@ -54,6 +59,7 @@ function setOperator(e) {
   if (numberOne === null) {
     numberOne = Number(display.value);
   } else if (numberOne === Number(display.value)) {
+    operator = e.target.textContent;
     return;
   } else {
     numberTwo = Number(display.value);
