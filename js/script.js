@@ -1,20 +1,30 @@
 const display = document.querySelector("#display");
 const buttons = document.querySelectorAll(".number");
-const equals = document.querySelector("#equals");
-const operators = document.querySelectorAll(".operator");
+const equalsBtn = document.querySelector("#equals");
+const operatorBtns = document.querySelectorAll(".operator");
+const clearBtn = document.querySelector("#clear");
 
 buttons.forEach((button) => {
   button.addEventListener("click", addNumberToDisplay);
 });
 
-operators.forEach((button) => {
+operatorBtns.forEach((button) => {
   button.addEventListener("click", setOperator);
 });
 
-equals.addEventListener("click", evaluate);
+equalsBtn.addEventListener("click", evaluate);
+clearBtn.addEventListener("click", clear);
+
 let numberOne = null;
 let numberTwo = null;
 let operator = null;
+
+function clear() {
+  numberOne = null;
+  numberTwo = null;
+  operator = null;
+  display.value = "";
+}
 
 function evaluate() {
   let newValue;
@@ -27,6 +37,9 @@ function evaluate() {
 function addNumberToDisplay(e) {
   const button = e.target;
 
+  if (button.textContent === "." && display.value.includes(".")) {
+    return;
+  }
   if (numberOne === Number(display.value)) {
     display.value = "";
   }
