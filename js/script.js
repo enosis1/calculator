@@ -31,6 +31,8 @@ function evaluate() {
   if (numberOne !== null && operator !== null) {
     newValue = operate(numberOne, operator, Number(display.value));
     display.value = newValue;
+    numberOne = newValue;
+    numberTwo = null;
   }
 }
 
@@ -49,7 +51,16 @@ function addNumberToDisplay(e) {
 }
 
 function setOperator(e) {
-  numberOne = Number(display.value);
+  if (numberOne === null) {
+    numberOne = Number(display.value);
+  } else if (numberOne === Number(display.value)) {
+    return;
+  } else {
+    numberTwo = Number(display.value);
+  }
+  if (numberOne !== null && numberTwo !== null && operator !== null) {
+    evaluate();
+  }
   operator = e.target.textContent;
 }
 
