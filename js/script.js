@@ -8,6 +8,8 @@ let replaceDisplay = false;
 // Get DOM variables
 const display = document.querySelector("#display");
 const buttons = document.querySelector(".buttons");
+const clear = document.querySelector(".clear");
+clear.addEventListener("click", handleClear);
 buttons.addEventListener("click", (e) => {
   let button = e.target;
   console.log(button.dataset);
@@ -27,29 +29,6 @@ buttons.addEventListener("click", (e) => {
     handleClear();
   }
 });
-
-// What happens for a calculation?
-//
-// When a number button is pressed:
-//    If replaceDisplay is true:
-//      Replace the displayValue variable with the button value
-//      Set the display (DOM) to the displayValue
-//      Set replaceDisplay to false
-//    Else:
-//      The button value is appended to the displayValue variable.
-//      Display (DOM) gets updated to match displayValue variable.
-// When an operator is pressed:
-//    If numberOne is not null:
-//      Set the operator button that is pressed to the operator variable
-//      Run the operate function with numberOne, the current displayValue and the operator to displayValue
-//      Update the display (DOM) to displayValue
-//      Set the replaceDisplay variable to true.
-//    Else:
-//      Get the DOM display value and set it to the numberOne variable.
-//      Set the replaceDisplay variable to true.
-// When the equals operator is pressed
-//    Set justOperated variable to true
-//    Call operate function with numberOne, operator and current displayValue
 
 function handleDisplay() {
   display.textContent = displayValue;
@@ -93,7 +72,14 @@ function handleEquals() {
   }
 }
 
-function handleClear() {}
+function handleClear() {
+  displayValue = "";
+  numberOne = null;
+  operator = null;
+  justOperated = false;
+  replaceDisplay = false;
+  handleDisplay();
+}
 
 function add(a, b) {
   return a + b;
