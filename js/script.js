@@ -1,99 +1,113 @@
-const display = document.querySelector("#display");
-const buttons = document.querySelectorAll(".number");
-const equalsBtn = document.querySelector("#equals");
-const operatorBtns = document.querySelectorAll(".operator");
-const clearBtn = document.querySelector("#clear");
-
-buttons.forEach((button) => {
-  button.addEventListener("click", addNumberToDisplay);
-});
-
-operatorBtns.forEach((button) => {
-  button.addEventListener("click", setOperator);
-});
-
-equalsBtn.addEventListener("click", evaluate);
-clearBtn.addEventListener("click", clear);
-
+// Create state variables
+let displayValue = "";
 let numberOne = null;
-let numberTwo = null;
 let operator = null;
+let justOperated = false;
+let replaceDisplay = false;
 
-function clear() {
-  numberOne = null;
-  numberTwo = null;
-  operator = null;
-  display.value = "";
+// Get DOM variables
+const display = document.querySelector("#display");
+const buttons = document.querySelector(".buttons");
+const clear = document.querySelector(".clear");
+clear.addEventListener("click", handleClear);
+buttons.addEventListener("click", (e) => {
+  let button = e.target;
+  console.log(button.dataset);
+  if (button.classList.contains("digit")) {
+    handleDigit(button.textContent);
+  } else if (button.dataset.value === "+") {
+    handleOperator(button.dataset.value);
+  } else if (button.dataset.value === "-") {
+    handleOperator(button.dataset.value);
+  } else if (button.dataset.value === "x") {
+    handleOperator(button.dataset.value);
+  } else if (button.dataset.value === "/") {
+    handleOperator(button.dataset.value);
+  } else if (button.dataset.value === "=") {
+    handleEquals(button.dataset.value);
+  } else if (button.classList.contains("clear")) {
+    handleClear();
+  }
+});
+
+function handleDisplay() {
+  display.textContent = displayValue;
 }
 
-function evaluate() {
-  let newValue;
+function handleDigit(digit) {
+  if (replaceDisplay) {
+    displayValue = digit;
+    handleDisplay();
+    replaceDisplay = false;
+  } else {
+    displayValue += Number(digit);
+    handleDisplay();
+  }
+}
+
+function handleOperator(op) {
   if (numberOne !== null && operator !== null) {
-    newValue = operate(numberOne, operator, Number(display.value));
-    console.log(typeof newValue);
-    roundedValue = Math.round(newValue * 100000000) / 100000000;
-    display.value = roundedValue;
-    numberOne = roundedValue;
-    numberTwo = null;
-  }
-}
-
-function addNumberToDisplay(e) {
-  const button = e.target;
-
-  if (button.textContent === "." && display.value.includes(".")) {
-    return;
-  }
-  if (display.value.length >= 9) {
-    return;
-  }
-  if (numberOne === Number(display.value)) {
-    display.value = "";
-  }
-  if (button.classList.contains("number")) {
-    display.value += button.textContent;
-  }
-}
-
-function setOperator(e) {
-  if (numberOne === null) {
-    numberOne = Number(display.value);
-  } else if (numberOne === Number(display.value)) {
-    operator = e.target.textContent;
-    return;
+    displayValue = operate(Number(numberOne), operator, Number(displayValue));
+    numberOne = String(displayValue);
+    operator = op;
+    handleDisplay();
+    replaceDisplay = true;
   } else {
-    numberTwo = Number(display.value);
+    numberOne = displayValue;
+    operator = op;
+    replaceDisplay = true;
   }
-  if (numberOne !== null && numberTwo !== null && operator !== null) {
-    evaluate();
-  }
-  operator = e.target.textContent;
 }
 
-function add(numberOne, numberTwo) {
-  return numberOne + numberTwo;
-}
-function subtract(numberOne, numberTwo) {
-  return numberOne - numberTwo;
-}
-function multiply(numberOne, numberTwo) {
-  return numberOne * numberTwo;
-}
-function divide(numberOne, numberTwo) {
-  if (numberTwo === 0) {
-    return "Cannot divide by 0.";
-  }
-  return numberOne / numberTwo;
-}
-
-function operate(numberOne, operator, numberTwo) {
-  if (operator === "+") {
-    return add(numberOne, numberTwo);
-  } else if (operator === "-") {
-    return subtract(numberOne, numberTwo);
-  } else if (operator === "x") {
-    return multiply(numberOne, numberTwo);
+function handleEquals() {
+  if (numberOne !== null && operator !== null) {
+    displayValue = operate(Number(numberOne), operator, Number(displayValue));
+    handleDisplay();
+    numberOne = displayValue;
+    operator = null;
+    replaceDisplay = true;
+    justOperated = true;
   } else {
-    return divide(numberOne, numberTwo);
+    return;
+  }
+}
+
+function handleClear() {
+  displayValue = "";
+  numberOne = null;
+  operator = null;
+  justOperated = false;
+  replaceDisplay = false;
+  handleDisplay();
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+function divide(a, b) {
+  return b === 0 ? "Error" : a / b;
+}
+
+function operate(a, operator, b) {
+  switch (operator) {
+    case "+":
+      return add(a, b);
+
+    case "-":
+      return subtract(a, b);
+
+    case "x":
+      return multiply(a, b);
+
+    case "/":
+      return divide(a, b);
   }
 }
